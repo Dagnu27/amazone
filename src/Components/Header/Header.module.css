@@ -162,7 +162,7 @@
 }
 
 .lower_container ul li {
-  padding: 8px 12px; 
+  /* padding: 2px 2px;  */
   display: flex;
   align-items: center;
 }

@@ -30,7 +30,10 @@ const Header = () => {
       {/* Search Bar */}
       <div className={classes.search}>
         <select name="category" id="category">
-          <option value="">All</option>
+          <option value="">All1</option>
+           <option value="">All2</option>
+            <option value="">All3</option>
+             <option value="">All4</option>
         </select>
         <input type="text" placeholder="Search product" />
         <FaSearch size={38} />
