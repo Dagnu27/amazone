@@ -1,6 +1,6 @@
 
 .header_container {
-  width: 100%;
+  width: 100vw;
   background-color: #131921;
   display: flex;
   align-items: center;

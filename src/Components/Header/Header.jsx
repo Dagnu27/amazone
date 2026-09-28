@@ -3,72 +3,74 @@ import classes from "./Header.module.css";
 import { FaSearch, FaShoppingCart } from "react-icons/fa";
 import { SlLocationPin } from "react-icons/sl";
 import LowerHeader from './LowerHeader';
+import { Link } from 'react-router-dom';
+
 const Header = () => {
   return (
     <>
-    <section className={classes.header_container}>
-      {/* Logo & Delivery Section */}
-      <div className={classes.logo_container}>
-        <a href="/">
-          <img 
-            src="https://pngimg.com/uploads/amazon/amazon_PNG11.png" 
-            alt="Amazon Logo" 
-          />
-        </a>
+      <section className={classes.header_container}>
+        {/* Logo & Delivery Section */}
+        <div className={classes.logo_container}>
+          <Link to="/">
+            <img 
+              src="https://pngimg.com/uploads/amazon/amazon_PNG11.png" 
+              alt="Amazon Logo" 
+            />
+          </Link>
 
-        <div className={classes.delivery}>
-          <span>
-            <SlLocationPin />
-          </span>
-          <div>
-            <p>Delivered to</p>
-            <span>Ethiopia</span>
+          <div className={classes.delivery}>
+            <span>
+              <SlLocationPin />
+            </span>
+            <div>
+              <p>Delivered to</p>
+              <span>Ethiopia</span>
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* Search Bar */}
-      <div className={classes.search}>
-        <select name="category" id="category">
-          <option value="">All1</option>
-           <option value="">All2</option>
-            <option value="">All3</option>
-             <option value="">All4</option>
-        </select>
-        <input type="text" placeholder="Search product" />
-        <FaSearch size={38} />
-      </div>
-
-      {/* Right Navigation / Account / Cart */}
-      <div className={classes.order_container}>
-        <a href="/" className={classes.language}>
-          <img 
-            src="https://upload.wikimedia.org/wikipedia/en/a/a4/Flag_of_the_United_States.svg" 
-            alt="US Flag" 
-          />
-          <select name="language" id="language">
-            <option value="EN">EN</option>
+        {/* Search Bar */}
+        <div className={classes.search}>
+          <select name="category" id="category">
+            <option value="">All</option>
+            <option value="electronics">Electronics</option>
+            <option value="fashion">Fashion</option>
+            <option value="books">Books</option>
           </select>
-        </a>
+          <input type="text" placeholder="Search product" />
+          <FaSearch size={25} />
+        </div>
 
-        <a href="/signin">
-          <p>Sign in</p>
-          <span>Account & Lists</span>
-        </a>
+        {/* Right Navigation / Account / Cart */}
+        <div className={classes.order_container}>
+          <div className={classes.language}>
+            <img 
+              src="https://upload.wikimedia.org/wikipedia/en/a/a4/Flag_of_the_United_States.svg" 
+              alt="US Flag" 
+            />
+            <select name="language" id="language">
+              <option value="EN">EN</option>
+            </select>
+          </div>
 
-        <a href="/orders">
-          <p>Returns</p>
-          <span>& Orders</span>
-        </a>
+          <Link to="/auth">
+            <p>Sign in</p>
+            <span>Account & Lists</span>
+          </Link>
 
-        {/* Cart */}
-        <a href="/cart" className={classes.cart}>
-          <FaShoppingCart size={35} />
-          <span>0</span>
-        </a>
-      </div>
-    </section>
-    <LowerHeader/>
+          <Link to="/orders">
+            <p>Returns</p>
+            <span>& Orders</span>
+          </Link>
+
+          {/* Cart */}
+          <Link to="/cart" className={classes.cart}>
+            <FaShoppingCart size={35} />
+            <span>0</span>
+          </Link>
+        </div>
+      </section>
+      <LowerHeader />
     </>
   );
 };
