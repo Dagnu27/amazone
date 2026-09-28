@@ -139,7 +139,7 @@
   color: #f08804;
 }
 
-.order_container,
+.order_container:hover,
 .delivery:hover,
 .logo_container a :hover,
 .lower_container ul li :hover{

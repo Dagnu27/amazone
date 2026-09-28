@@ -7,20 +7,21 @@ const Product = () => {
   const [products, setproducts] = useState([])
 
   useEffect(() => {
- axios.get('https://api.escuelajs.co/api/v1/products')
-  .then((res) => {
-    const validProducts = res.data
-      .filter(product => product.images?.length > 0)
-      .slice(0, 32);
+    axios.get('https://api.escuelajs.co/api/v1/products')
+      .then((res) => {
+        const validProducts = res.data
+          .filter(product => product.images?.length > 0)
+          .slice(0, 30);
 
-    setproducts(validProducts);
-  })
+        setproducts(validProducts);
+      })
+      .catch((err) => console.error(err));
   }, [])
 
   return (
     <section className={classes.products_container}>
       {products.map((singleProduct) => (
-        <ProductCard Product={singleProduct} key={singleProduct.id} />
+        <ProductCard product={singleProduct} key={singleProduct.id} />
       ))}
     </section>
   )

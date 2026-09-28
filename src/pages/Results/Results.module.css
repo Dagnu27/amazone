@@ -1,0 +1,14 @@
+.products_container {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 20px;
+  max-width: 1350px;      
+  width: 90%;            
+  margin: 30px auto;    
+  padding: 0 20px;       
+  box-sizing: border-box;
+}
+.products_container section{
+  margin: 30px auto;
+  
+}
