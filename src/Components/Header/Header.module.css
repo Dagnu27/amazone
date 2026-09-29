@@ -133,10 +133,10 @@
 .cart span {
   position: absolute;
   font-weight: bold;
-  top: -4px;
+  top: 4px;
   left: 15px;
   font-size: 14px;
-  color: #f08804;
+  color: #020100;
 }
 
 .order_container:hover,
