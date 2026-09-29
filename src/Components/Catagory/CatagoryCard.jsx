@@ -12,8 +12,8 @@ const CatagoryCard = ({ data }) => {
         <p>shop now</p>
         
       </Link>
-    </div>
-  )
+    </div>    
+  )     
 }
 
 export default CatagoryCard

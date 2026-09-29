@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { productUrl } from '../../Api/endPoint';
 import ProductCard from '../../Components/product/ProductCard';
+import Loader from '../../Components/Loader/Loader';
 
 const Results = () => {
   const [products, setproducts] = useState([]);
@@ -13,7 +14,8 @@ const Results = () => {
 
   useEffect(() => {
     setLoading(true);
-    axios.get(`${productUrl}?categorySlug=${catagoryName}`)
+    axios
+      .get(`${productUrl}?categorySlug=${catagoryName}`)
       .then((res) => {
         setproducts(res.data);
         setLoading(false);
@@ -29,16 +31,13 @@ const Results = () => {
       <h1 style={{ padding: '30px' }}>Results</h1>
       <p style={{ padding: '30px' }}>Category: {catagoryName}</p>
       <hr />
-      
+
       {loading ? (
-        <p style={{ padding: '30px' }}>Loading products...</p>
+        <Loader />
       ) : (
         <div className={classes.products_container}>
           {products?.map((product) => (
-            <ProductCard 
-              key={product.id}
-              product={product}
-            />
+            <ProductCard key={product.id} product={product} />
           ))}
         </div>
       )}
