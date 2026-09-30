@@ -35,10 +35,10 @@ function ProductDetail() {
       ) : product ? (
         <div style={{ padding: "30px", maxWidth: "1200px", margin: "0 auto" }}>
           <ProductCard 
-          product={product}
-           flex={true} 
-           renderDesc={true}
-            />
+            product={product} 
+            flex={true} 
+            renderDesc={true} 
+          />
         </div>
       ) : (
         <div style={{ padding: "50px", textAlign: "center", fontSize: "1.2rem" }}>
