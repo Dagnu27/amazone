@@ -1,0 +1,90 @@
+.container {
+  display: flex;
+  gap: 20px;
+  max-width: 1300px;
+  margin: 20px auto;
+  padding: 0 20px;
+  align-items: flex-start;
+}
+
+.cart_container {
+  flex: 1;
+  background-color: #fff;
+  padding: 20px;
+}
+
+.cart_container h2 {
+  font-size: 22px;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.cart_container h3 {
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 12px;
+}
+
+.cart_container hr {
+  border: 0;
+  border-top: 1px solid #e7e7e7;
+  margin-bottom: 20px;
+}
+
+/* Right Side Subtotal Box */
+.subtotal {
+  width: 280px;
+  min-width: 280px;
+  background-color: #f3f3f3;
+  border: 1px solid #d5d9d9;
+  border-radius: 4px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  position: sticky;
+  top: 20px;
+}
+
+.subtotal > div {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  font-size: 14px;
+}
+
+.subtotal span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+}
+
+.subtotal a {
+  display: block;
+  text-align: center;
+  width: 100%;
+  background-color: #ffd814;
+  border: 1px solid #fcd200;
+  border-radius: 8px;
+  padding: 6px 0;
+  font-size: 13px;
+  color: #0f1111;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.subtotal a:hover {
+  background-color: #f7ca00;
+}
+
+@media screen and (max-width: 968px) {
+  .container {
+    flex-direction: column;
+  }
+  .subtotal {
+    width: 100%;
+    min-width: auto;
+    position: static;
+  }
+}

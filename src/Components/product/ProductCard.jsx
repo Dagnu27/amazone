@@ -1,3 +1,4 @@
+// src/Components/product/ProductCard.jsx
 import React, { useContext } from "react";
 import Rating from "@mui/material/Rating";
 import { Link } from "react-router-dom";
@@ -6,7 +7,7 @@ import classes from "./Product.module.css";
 import { DataContext } from "../DataProvider/DataProvider";
 import { Type } from "../../Utility/action.type";
 
-function ProductCard({ product, flex, renderDesc }) {
+function ProductCard({ product, flex, renderDesc, renderAdd = true }) { 
   if (!product) return null;
   const { id, title, price, description, images, image, rating } = product;
 
@@ -15,19 +16,9 @@ function ProductCard({ product, flex, renderDesc }) {
   const AddToCart = () => {
     dispatch({
       type: Type.ADD_TO_BASKET,
-      item: {
-        id,
-        title,
-        price,
-        description,
-        images,
-        image,
-        rating,
-      },
+      item: { id, title, price, description, images, image, rating },
     });
   };
-
-  // Safe Image URL Resolution
   let imageUrl = "";
   if (Array.isArray(images) && images.length > 0) {
     imageUrl = images[0];
@@ -56,7 +47,7 @@ function ProductCard({ product, flex, renderDesc }) {
 
   return (
     <div className={`${classes.card_container} ${flex ? classes.product_flexed : ""}`}>
-      {/* Product Image Section */}
+    
       <div className={classes.img_wrapper}>
         <Link to={`/products/${id}`}>
           <img
@@ -70,33 +61,45 @@ function ProductCard({ product, flex, renderDesc }) {
         </Link>
       </div>
 
-      {/* Product Details Section */}
+     
       <div className={classes.product_details}>
         <h3>{title || "Untitled Product"}</h3>
 
-        {/* Rating */}
         <div className={classes.rating}>
           <Rating value={rating?.rate || 4} precision={0.5} readOnly />
           <small>({rating?.count || 120})</small>
         </div>
 
-        {/* Price */}
         <div className={classes.price}>
           <CurrencyFormat amount={price || 0} />
         </div>
 
-        {/* Description (rendered in Detail view) */}
         {renderDesc && (
           <div className={classes.description_box}>
             <p>{description || "No description available."}</p>
           </div>
         )}
 
-        {/* Add To Cart Button */}
-        <button className={classes.button} onClick={AddToCart}>
-          add to cart
-        </button>
-      </div>
+
+        {renderAdd && (
+          <button
+            className={classes.button}
+            onClick={AddToCart}
+            style={
+              flex
+                ? {
+                    display: "block",
+                    position: "static",
+                    width: "500px",
+                    marginTop: "20px",
+                  }
+                : {}
+            }
+          >
+            Add to Cart
+          </button>
+        )}
+      </div>   
     </div>
   );
 }
