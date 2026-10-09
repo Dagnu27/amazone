@@ -1,4 +1,3 @@
-// src/Components/product/ProductCard.jsx
 import React, { useContext } from "react";
 import Rating from "@mui/material/Rating";
 import { Link } from "react-router-dom";
@@ -7,7 +6,9 @@ import classes from "./Product.module.css";
 import { DataContext } from "../DataProvider/DataProvider";
 import { Type } from "../../Utility/action.type";
 
-function ProductCard({ product, flex, renderDesc, renderAdd = true }) { 
+const FALLBACK_IMAGE = "https://placehold.co/300";
+
+function ProductCard({ product, flex, renderDesc, renderAdd = true }) {
   if (!product) return null;
   const { id, title, price, description, images, image, rating } = product;
 
@@ -19,6 +20,8 @@ function ProductCard({ product, flex, renderDesc, renderAdd = true }) {
       item: { id, title, price, description, images, image, rating },
     });
   };
+
+  // Image URL Parsing
   let imageUrl = "";
   if (Array.isArray(images) && images.length > 0) {
     imageUrl = images[0];
@@ -41,27 +44,27 @@ function ProductCard({ product, flex, renderDesc, renderAdd = true }) {
     }
   }
 
-  if (!imageUrl) {
-    imageUrl = "https://via.placeholder.com/300";
-  }
+  // Ensure imageUrl is valid and non-empty to prevent duplicate network calls
+  const safeImageUrl = imageUrl && imageUrl.trim() !== "" ? imageUrl : FALLBACK_IMAGE;
 
   return (
     <div className={`${classes.card_container} ${flex ? classes.product_flexed : ""}`}>
-    
+      {/* Image Container */}
       <div className={classes.img_wrapper}>
         <Link to={`/products/${id}`}>
           <img
-            src={imageUrl}
+            src={safeImageUrl}
             alt={title || "Product"}
             className={classes.img_container}
             onError={(e) => {
-              e.target.src = "https://via.placeholder.com/300";
+              e.target.onerror = null; // Prevents infinite onError loops
+              e.target.src = FALLBACK_IMAGE;
             }}
           />
         </Link>
       </div>
 
-     
+      {/* Details Container */}
       <div className={classes.product_details}>
         <h3>{title || "Untitled Product"}</h3>
 
@@ -80,7 +83,6 @@ function ProductCard({ product, flex, renderDesc, renderAdd = true }) {
           </div>
         )}
 
-
         {renderAdd && (
           <button
             className={classes.button}
@@ -90,7 +92,8 @@ function ProductCard({ product, flex, renderDesc, renderAdd = true }) {
                 ? {
                     display: "block",
                     position: "static",
-                    width: "500px",
+                    width: "100%",
+                    maxWidth: "500px",
                     marginTop: "20px",
                   }
                 : {}
@@ -99,7 +102,7 @@ function ProductCard({ product, flex, renderDesc, renderAdd = true }) {
             Add to Cart
           </button>
         )}
-      </div>   
+      </div>
     </div>
   );
 }

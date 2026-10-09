@@ -31,6 +31,55 @@
   margin-bottom: 20px;
 }
 
+/* Individual Cart Item Layout */
+.cart_product {
+  display: flex;
+  gap: 20px;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #e7e7e7;
+  align-items: center;
+}
+
+.cart_product > div:first-child {
+  flex: 1;
+}
+
+/* Up/Down Arrow Quantity Controller Side Column */
+.btn_container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  min-width: 50px;
+}
+
+.btn {
+  padding: 4px 8px;
+  font-weight: bold;
+  cursor: pointer;
+  background-color: #fff;
+  border: 1px solid #d5d9d9;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn:hover {
+  background-color: #f7fafa;
+  border-color: #d5d9d9;
+}
+
+/* Quantity Count Display */
+.btn_container span {
+  font-size: 15px;
+  font-weight: 600;
+  color: #0f1111;
+}
+
 /* Right Side Subtotal Box */
 .subtotal {
   width: 280px;
