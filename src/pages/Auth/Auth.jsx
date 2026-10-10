@@ -3,13 +3,14 @@ import classes from './Auth.module.css'
 import { Link } from 'react-router-dom'
 import { auth } from "../../Utility/firebase"
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth"
-import {dataContext} from "../../components/DataProvider/DataProvider"
+import { DataContext } from "../../Components/DataProvider/DataProvider"
+import { Type } from "../../Utility/action.type"
 const Auth = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
 
-  const [{user},dispatch] = useContext(dataContext)
+  const [{user},dispatch] = useContext(DataContext)
  console.log(user)
 
 
