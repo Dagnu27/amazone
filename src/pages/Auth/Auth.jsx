@@ -1,56 +1,64 @@
-import React, { useState,useContext } from 'react'
+import React, { useState, useContext } from 'react'
 import classes from './Auth.module.css'
-import { Link } from 'react-router-dom'
+import { Link,useNavigate } from 'react-router-dom'
 import { auth } from "../../Utility/firebase"
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth"
 import { DataContext } from "../../Components/DataProvider/DataProvider"
 import { Type } from "../../Utility/action.type"
+import { ClipLoader } from "react-spinners"
+
 const Auth = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
-
-  const [{user},dispatch] = useContext(DataContext)
- console.log(user)
-
-
-
+  const [isLoading, setIsLoading] = useState({
+    signIn: false,
+    register: false
+  });
+  const [{ user }, dispatch] = useContext(DataContext);
+  const navigate = useNavigate();
   // Handle Sign In
   const signinHandler = async (e) => {
     e.preventDefault();
+    setIsLoading(prev => ({ ...prev, signIn: true }));
+    setError(null);
+
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        const user = userCredential.user;
-        // console.log("Signed in:", user);
         dispatch({
-          type:Type.SET_USER, 
+          type: Type.SET_USER, 
           user: userCredential.user
-        }) 
+        });
+        setIsLoading(prev => ({ ...prev, signIn: false }));
+        navigate("/");
       })
       .catch((err) => {
         setError(err.message);
-        console.log(err);
+        setIsLoading(prev => ({ ...prev, signIn: false }));
       });
   };
 
   // Handle Register / Create Account
   const registerHandler = async (e) => {
     e.preventDefault();
+    setIsLoading(prev => ({ ...prev, register: true }));
+    setError(null);
+
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        const user = userCredential.user;
-        // console.log("Registered:", user);
-          dispatch({
-          type:Type.SET_USER, 
+        dispatch({
+          type: Type.SET_USER, 
           user: userCredential.user
-        })
+        });
+        setIsLoading(prev => ({ ...prev, register: false }));
+        navigate("/");
       })
       .catch((err) => {
         setError(err.message);
-        console.log(err);
+        setIsLoading(prev => ({ ...prev, register: false }));
       });
   };
-
+  
   return (
     <section className={classes.login}>
       {/* Logo */}
@@ -64,8 +72,6 @@ const Auth = () => {
       {/* Form Container Box */}
       <div className={classes.login_container}>
         <h1>Sign in</h1>
-        
-        {error && <small style={{ color: "red" }}>{error}</small>}
 
         <form>
           <div>
@@ -93,7 +99,7 @@ const Auth = () => {
             onClick={signinHandler} 
             className={classes.login_signinbtn}
           >
-            Sign In
+            {isLoading.signIn ? <ClipLoader color="#eb8585" size={20} /> : "Sign In"}
           </button>
         </form>
 
@@ -111,8 +117,10 @@ const Auth = () => {
           onClick={registerHandler} 
           className={classes.register_btn}
         >
-          Create your Amazon account
+          {isLoading.register ? <ClipLoader color="#f5adad" size={20} /> : "Create your Amazon account"}
         </button>
+
+        {error && <small style={{ color: "red", display: "block", marginTop: "10px" }}>{error}</small>}
       </div>
     </section>
   )

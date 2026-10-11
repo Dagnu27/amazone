@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import { DataContext } from "../DataProvider/DataProvider";
 
 const Header = () => {
-  const [{ basket }, dispatch] = useContext(DataContext);
+  const [{ user, basket }, dispatch] = useContext(DataContext);
  const totalItems = basket?.reduce((total, item) => total + item.amount, 0) || 0;
   return (
     <section className={classes.fixed}>
@@ -57,7 +57,15 @@ const Header = () => {
           </div>
 
           <Link to="/auth">
-            <p>Sign in</p>
+          <div>
+           {user ? (
+            <p>Hello, {user ?.email?.split("@")[0]}</p>
+          ) : (
+            <p>Hello, Sign in</p>
+          )}
+            
+
+          </div>
             <span>Account & Lists</span>
           </Link>
 
