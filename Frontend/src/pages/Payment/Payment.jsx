@@ -1,75 +1,91 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import LayOut from '../../Components/LayOut/LayOut';
-import classes from './Payment.module.css'
+import classes from './Payment.module.css';
 import { DataContext } from '../../Components/DataProvider/DataProvider';
-import {ProductCard} from '../../Components/product/ProductCard'
-import {useStripe,useElement,cardElement} from '@stripe/stripe-js';
-import Card from '@mui/material/Card';
+import  ProductCard  from '../../Components/product/ProductCard';
+import { useStripe, useElements, CardElement } from '@stripe/react-stripe-js';
 import CurrencyFormat from '../../Components/Currencyformat/CurrencyFormat1';
+
 function Payment() {
   const [{ user, basket }] = useContext(DataContext);
+  
+  const [cardError, setCardError] = useState("");
+  const [processing, setProcessing] = useState(false);
+
   const totalItem = basket?.reduce((amount, item) => {
     return item.amount + amount;
-  }, 0);
+  }, 0) || 0;
 
-  const total =basket.reduce((amount,item)=>{
-    return item.price*item.amount+amount;
-  },0);
-  const stripe=useStripe()
-  const  elements = useElement()
+  const total = basket?.reduce((amount, item) => {
+    return item.price * item.amount + amount;
+  }, 0) || 0;
 
-  const handelChange=(e)=>{
-   console.log(e);
-   e?.error?.message? setCardError(e?.error?.message):setCardError("")
-  }
+  const stripe = useStripe();
+  const elements = useElements();
+
+  const handleChange = (e) => {
+    console.log(e);
+    e?.error?.message ? setCardError(e.error.message) : setCardError("");
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    // Add your Stripe payment submission logic here
+  };
+
   return (
     <LayOut>
-      {/* {header} */}
+      {/* Header */}
       <div className={classes.Payment_header}>
         Checkout ({totalItem}) items
       </div>
-      {/* { payment method} */}
-      <section className={classes.Payment} >
-        {/* adress */}
+
+      {/* Payment Method Section */}
+      <section className={classes.Payment}>
+        {/* Address */}
         <div className={classes.flex}>
-          <h3>Delivary address</h3>
+          <h3>Delivery Address</h3>
           <div>
-            <div>{user.email}</div>
-            <div>123 React lane </div>
-            <div>chicage it</div>
-          </div>
-        </div>
-        <hr />
-        {/* product */}
-        <div className={classes.flex}>
-          <h3>review item and delivery</h3>
-          <div>
-            {
-              basket?.map((item)=>(<ProductCard product={item} flex={true}/>) )
-            }
+            <div>{user?.email}</div>
+            <div>123 React Lane</div>
+            <div>Chicago, IL</div>
           </div>
         </div>
         <hr />
 
-        {/* card */}
+        {/* Product Review */}
         <div className={classes.flex}>
-          <h3>payment method </h3>
-          <div className={classes.Payment_Card_Container}>
- <div className={classes.Payment_detaile}>
-  <form action="" method="get">
-    { CardErrer && <small style={{color:"red"}}>{CardErrer}</small>}
-      <cardElement onChange={handelChange} />
-      {/* price */}
-      <div className={classes.payment_price}>
+          <h3>Review items and delivery</h3>
           <div>
-             <span>
-              Total Order : <CurrencyFormat amount={total}/>
-             </span>
+            {basket?.map((item, index) => (
+              <ProductCard key={index} product={item} flex={true} />
+            ))}
           </div>
-          <button>Pay know </button>
-      </div>
-  </form>
- </div>
+        </div>
+        <hr />
+
+        {/* Card Details */}
+        <div className={classes.flex}>
+          <h3>Payment Method</h3>
+          <div className={classes.Payment_Card_Container}>
+            <div className={classes.Payment_detaile}>
+              <form onSubmit={handleSubmit}>
+                {cardError && <small style={{ color: "red" }}>{cardError}</small>}
+                <CardElement onChange={handleChange} />
+                
+                {/* Price */}
+                <div className={classes.payment_price}>
+                  <div>
+                    <span style={{ display: "flex", gap: "10px" }}>
+                      Total Order : <CurrencyFormat amount={total} />
+                    </span>
+                  </div>
+                  <button type="submit" disabled={processing}>
+                    {processing ? "Processing..." : "Pay Now"}
+                  </button>
+                </div>
+              </form>
+            </div>
           </div>
         </div>
       </section>
@@ -77,4 +93,4 @@ function Payment() {
   );
 }
 
-export default Payment; 
+export default Payment;

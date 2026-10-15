@@ -5,41 +5,60 @@
   background-color: rgb(232, 173, 97);
   border-bottom: 1px solid lightgray;
 }
-.Payment{
-  padding: 30px;
 
+.Payment {
+  padding: 30px;
 }
 
-.flex{
+.flex {
   display: flex;
   gap: 20px;
   padding: 30px;
 }
-.flex h3{
+
+.flex h3 {
   min-width: 300px;
 }
-.flex img{
+
+.flex img {
   width: 80px !important;
 }
-.flex div{
+
+.flex div {
   height: auto !important;
 }
-.Payment_Card_Container{
+
+.Payment_Card_Container {
   max-width: 350px;
   width: 100%;
 }
 
-.Payment_detaile{
+.Payment_detaile {
   font-size: 20px;
-
 }
 
-.payment_price{
+.payment_price {
   padding: 20px;
 }
-.payment_price > div{
+
+.payment_price > div {
   display: flex;
   font-size: 16px;
   gap: 10px;
 }
 
+.Payment_detaile button {
+  margin-top: 15px;
+  width: 100%;
+  border: none;
+  background-color: #febd69;
+  color: #111;
+  font-weight: 500;
+  border-radius: 5px;
+  padding: 8px 10px;
+  cursor: pointer;
+}
+
+.Payment_detaile button:hover {
+  background-color: #f3a847;
+}

@@ -2,7 +2,7 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 import Landing from "./pages/Landing/Landing";
 import Auth from "./pages/Auth/Auth";
-import Payment from "./Pages/Payment/Payment";
+import Payment from "./pages/Payment/Payment";
 import {Elements} from '@stripe/react-stripe-js';
 import {loadStripe} from '@stripe/stripe-js';
 import Orders from "./pages/Orders/Orders";
