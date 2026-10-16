@@ -30,8 +30,15 @@ function Payment() {
 
   const handeleProduct = async (e) => {
     e.preventDefault()
-    // function make contaacting is the very mandatory
-    
+    // backend ?? function contact to client secret 
+   
+   
+
+      // clinte side conformamtion in react side 
+
+
+
+      // after conformation === orders   fire store store then clear the basket 
   };
 
   return (
