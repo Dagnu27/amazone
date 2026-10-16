@@ -62,3 +62,10 @@
 .Payment_detaile button:hover {
   background-color: #f3a847;
 }
+
+@media screen and (max-width:789px){
+.flex{
+  flex-direction: column;
+  
+}
+}

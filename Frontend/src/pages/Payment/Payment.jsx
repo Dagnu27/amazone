@@ -28,9 +28,10 @@ function Payment() {
     e?.error?.message ? setCardError(e.error.message) : setCardError("");
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    // Add your Stripe payment submission logic here
+  const handeleProduct = async (e) => {
+    e.preventDefault()
+    // function make contaacting is the very mandatory
+    
   };
 
   return (
@@ -69,7 +70,7 @@ function Payment() {
           <h3>Payment Method</h3>
           <div className={classes.Payment_Card_Container}>
             <div className={classes.Payment_detaile}>
-              <form onSubmit={handleSubmit}>
+              <form onSubmit={handeleProduct}>
                 {cardError && <small style={{ color: "red" }}>{cardError}</small>}
                 <CardElement onChange={handleChange} />
                 
