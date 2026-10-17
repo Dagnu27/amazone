@@ -2,9 +2,9 @@
   position: relative;
   margin-top: -10%;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
-  max-width: 1450px;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 50px;
+  max-width: 1600px;
   margin: -10% auto 0 auto;
   padding: 0 10px;
   z-index: 10;

@@ -1,0 +1,38 @@
+.container {
+  padding: 20px;
+  background-color: #eaeded;
+  min-height: 80vh;
+}
+
+.orders_container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px;
+}
+
+.orders_container h2 {
+  font-weight: 500;
+  margin-bottom: 20px;
+  border-bottom:3px solid rgb(225, 217, 233) ;
+}
+.orders_container img{
+  width: 100px;
+}
+
+.orders_container p{
+  padding: 12px;
+}
+.order_block {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  border: 1px solid lightgray;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.order_block p {
+  font-weight: bold;
+  color: #555;
+  margin-bottom: 10px;
+}

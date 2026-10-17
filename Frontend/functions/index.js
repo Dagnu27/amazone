@@ -1,5 +1,5 @@
 
-const { onRequest } = require("firebase-functions/https");
+const {onRequest} = require("firebase-functions/https");
 const logger = require("firebase-functions/logger");
 
 const express = require("express");

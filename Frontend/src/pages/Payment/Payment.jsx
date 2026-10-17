@@ -8,6 +8,7 @@ import CurrencyFormat from '../../Components/Currencyformat/CurrencyFormat1';
 import { axiosInstance } from '../../Api/axios';
 import { db } from '../../Utility/firebase';
 import { useNavigate } from 'react-router-dom';
+import { Type } from '../../Utility/action.type';
 
 function Payment() {
   const [{ user, basket }, dispatch] = useContext(DataContext);
@@ -87,7 +88,7 @@ function Payment() {
         });
 
       // 4. Clear the basket in your global state/context
-      dispatch({ type: "EMPTY_BASKET" });
+      dispatch({ type: Type.EMPTY_BASKET });
 
       setProcessing(false);
       navigate("/orders", { state: { msg: "You have placed your new order" } });
