@@ -1,14 +1,18 @@
 import React, { useContext, useState } from 'react';
-import LayOut from '../../Components/LayOut/LayOut';
+import LayOut from '../../Components/LayOut/LayOut'
 import classes from './Payment.module.css';
 import { DataContext } from '../../Components/DataProvider/DataProvider';
-import  ProductCard  from '../../Components/product/ProductCard';
+import ProductCard from '../../Components/product/ProductCard';
 import { useStripe, useElements, CardElement } from '@stripe/react-stripe-js';
 import CurrencyFormat from '../../Components/Currencyformat/CurrencyFormat1';
+import { axiosInstance } from '../../Api/axios';
+import { db } from '../../Utility/firebase';
+import { useNavigate } from 'react-router-dom';
+// Import your loader icon here if needed, e.g., import { ClipLoader } from 'react-spinners';
 
 function Payment() {
   const [{ user, basket }] = useContext(DataContext);
-  
+
   const [cardError, setCardError] = useState("");
   const [processing, setProcessing] = useState(false);
 
@@ -22,23 +26,56 @@ function Payment() {
 
   const stripe = useStripe();
   const elements = useElements();
+  const navigate =useNavigate()
 
   const handleChange = (e) => {
     console.log(e);
     e?.error?.message ? setCardError(e.error.message) : setCardError("");
   };
 
-  const handeleProduct = async (e) => {
-    e.preventDefault()
-    // backend ?? function contact to client secret 
-   
-   
+  const handlePayment = async (e) => {
+    e.preventDefault();
 
-      // clinte side conformamtion in react side 
+    if (!stripe || !elements) {
+      return; // Stripe has not yet loaded.
+    }
 
+    try {
+      setProcessing(true);
 
+      // 1. Backend: Call backend to get the client secret
+      const response = await axiosInstance({
+        method: "post",
+        url: `/payments/create?total=${total * 100}`,
+      });
 
-      // after conformation === orders   fire store store then clear the basket 
+      const clientSecret = response.data?.clientSecret;
+
+      // 2. Client Side: Confirm payment on the client side using Stripe
+      const {paymentIntent} = await stripe.confirmCardPayment(clientSecret, {
+        payment_method: {
+          card: elements.getElement(paymentIntent),
+        },
+      });
+
+      console.log(confirmation);
+
+      // 3. After confirmation: Save order to Firestore and clear the basket
+      // (Add your Firebase order creation and basket clearing logic here)
+      await  db.collection("users").doc(user.uid).collection("orders").doc(paymentIntent.id)
+      Set({
+        basket:basket,
+        amount:paymentIntent.amount,
+      created:paymentIntent.created ,
+        })
+    
+      setProcessing(false);
+      navigate("./orders", {state:{msg:"you have placed your new order "}})
+    } catch (error) {
+      console.log(error);
+      setCardError(error.message || "Payment failed. Please try again.");
+      setProcessing(false);
+    }
   };
 
   return (
@@ -77,10 +114,10 @@ function Payment() {
           <h3>Payment Method</h3>
           <div className={classes.Payment_Card_Container}>
             <div className={classes.Payment_detaile}>
-              <form onSubmit={handeleProduct}>
+              <form onSubmit={handlePayment}>
                 {cardError && <small style={{ color: "red" }}>{cardError}</small>}
                 <CardElement onChange={handleChange} />
-                
+
                 {/* Price */}
                 <div className={classes.payment_price}>
                   <div>
@@ -88,8 +125,14 @@ function Payment() {
                       Total Order : <CurrencyFormat amount={total} />
                     </span>
                   </div>
-                  <button type="submit" disabled={processing}>
-                    {processing ? "Processing..." : "Pay Now"}
+                  <button type="submit" disabled={processing || !stripe}>
+                    {
+                      processing ? (
+                        <div className={classes.loader}>
+                          <p>Please wait...</p>
+                        </div>
+                      ) : "Pay Now"
+                    }
                   </button>
                 </div>
               </form>

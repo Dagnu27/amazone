@@ -63,6 +63,13 @@
   background-color: #f3a847;
 }
 
+.loader{
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  justify-content: center;
+  color: rgb(97, 87, 73);
+}
 @media screen and (max-width:789px){
 .flex{
   flex-direction: column;
